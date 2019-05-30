@@ -7,6 +7,6 @@ $LOAD_PATH.unshift(File.join(dir, 'lib'))
 ENV['BUNDLE_GEMFILE'] ||= File.join(dir, 'Gemfile')
 
 require 'bundler/setup'
-require 'Zhacai'
+require 'zhacai'
 
 Zhacai::Crawler.crawl_all

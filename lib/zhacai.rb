@@ -7,6 +7,7 @@ module Zhacai
   extend ActiveSupport::Autoload
 
   autoload :Config
+  autoload :Crawler
   autoload :Environment
   autoload :HTTP
   autoload :Logger
@@ -14,3 +15,4 @@ module Zhacai
   autoload :Slack
   autoload :Template
 end
+
