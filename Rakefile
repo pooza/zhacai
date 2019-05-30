@@ -16,4 +16,3 @@ end
 Dir.glob(File.join(Zhacai::Environment.dir, 'lib/task/*.rb')).each do |f|
   require f
 end
-
