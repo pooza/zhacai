@@ -15,4 +15,3 @@ module Zhacai
   autoload :Slack
   autoload :Template
 end
-
