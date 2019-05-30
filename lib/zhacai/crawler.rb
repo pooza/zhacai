@@ -56,8 +56,10 @@ module Zhacai
       return Addressable::URI.parse(@params['/hook'])
     end
 
-    def tags
-      return @params['/tags'] || []
+    def create_entry_uri(path)
+      uri = Addressable::URI.parse(@config['/growi/url'])
+      uri.path = path
+      return uri
     end
 
     def self.crawl_all
@@ -72,12 +74,6 @@ module Zhacai
     end
 
     private
-
-    def create_entry_uri(path)
-      uri = Addressable::URI.parse(@config['/growi/url'])
-      uri.path = path
-      return uri
-    end
 
     def tz
       return Time.now.strftime('%:z')
