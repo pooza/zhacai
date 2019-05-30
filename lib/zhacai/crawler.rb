@@ -2,8 +2,10 @@ require 'addressable/uri'
 
 module Zhacai
   class Crawler
+    attr_reader :params
+
     def initialize(params)
-      @config = Config.instance
+      @params = Config.flatten('', params)
       @logger = Logger.new
     end
 
@@ -18,13 +20,14 @@ module Zhacai
     end
 
     def body
-      template = Template.new('toot')
+      template = Template.new('message')
       template[:crawler] = self
       return template.to_s
     end
 
     def hook_uri
       @hook_uri ||= Addressable::URI.parse(@params['/hook'])
+      return nil unless @hook_uri.absolute?
       return @hook_uri
     end
 
