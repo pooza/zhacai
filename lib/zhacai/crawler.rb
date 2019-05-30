@@ -4,8 +4,6 @@ require 'uri'
 
 module Zhacai
   class Crawler
-    attr_reader :params
-
     def initialize(params)
       @config = Config.instance
       @params = Config.flatten('', params)
@@ -15,7 +13,7 @@ module Zhacai
 
     def crawl
       Slack.new(hook_uri).say(body, :text)
-      @logger.info(params)
+      @logger.info(@params)
     rescue => e
       e = Ginseng::Error.create(e)
       e.package = Package.full_name
@@ -31,7 +29,8 @@ module Zhacai
 
     def entries
       entries = {}
-      @http.get(article_list_uri).parsed_response['pages'].each do |entry|
+      @http.get(article_list_uri).parsed_response['pages'].each_with_index do |entry, i|
+        break unless i < @config['/message/entries/limit']
         time = Time.parse(entry['updatedAt']).getlocal(tz)
         uri = create_entry_uri(entry['path'])
         entries[time.to_s] = {
@@ -41,8 +40,6 @@ module Zhacai
         }
       end
       return entries.sort.reverse
-    rescue => e
-      @logger.error(e)
     end
 
     def article_list_uri

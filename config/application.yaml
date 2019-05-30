@@ -5,3 +5,6 @@ package:
     - Tatsuya Koishi
   email:
     - tkoishi@b-shock.co.jp
+message:
+  entries:
+    limit: 10
