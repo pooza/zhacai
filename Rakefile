@@ -8,7 +8,7 @@ require 'zhacai'
 desc 'test all'
 task test: ['zhacai:test']
 
-[:crawl, :clean, :touch].each do |action|
+[:crawl].each do |action|
   desc "alias of zhacai:#{action}"
   task action => "zhacai:#{action}"
 end

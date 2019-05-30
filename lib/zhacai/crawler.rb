@@ -21,8 +21,12 @@ module Zhacai
       @logger.error(e.to_h)
     end
 
+    def template_name
+      return @params['/template'] || 'message'
+    end
+
     def body
-      template = Template.new('message')
+      template = Template.new(template_name)
       template[:crawler] = self
       return template.to_s
     end
