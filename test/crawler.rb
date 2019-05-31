@@ -20,6 +20,12 @@ module Zhacai
       end
     end
 
+    def test_ignore_paths
+      Crawler.all do |crawler|
+        assert(crawler.ignore_paths.is_a?(Array))
+      end
+    end
+
     def test_body
       Crawler.all do |crawler|
         assert(crawler.body.present?)

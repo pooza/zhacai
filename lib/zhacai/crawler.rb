@@ -21,6 +21,10 @@ module Zhacai
       @logger.error(e.to_h)
     end
 
+    def ignore_paths
+      return @params['/ignore_paths'] || []
+    end
+
     def template_name
       return @params['/template'] || 'message'
     end
@@ -35,7 +39,9 @@ module Zhacai
 
     def entries
       entries = {}
-      @http.get(article_list_uri).parsed_response['pages'].each_with_index do |entry, i|
+      i = 0
+      @http.get(article_list_uri).parsed_response['pages'].each do |entry|
+        next if ignore_paths.include?(entry['path'])
         break unless i < @config['/message/entries/limit']
         time = Time.parse(entry['updatedAt']).getlocal(tz)
         uri = create_entry_uri(entry['path'])
@@ -44,6 +50,7 @@ module Zhacai
           title: URI.decode_www_form_component(uri.path.split('/').last),
           uri: uri,
         }
+        i += 1
       end
       return entries.sort.reverse
     end
