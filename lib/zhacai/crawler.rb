@@ -25,8 +25,10 @@ module Zhacai
       return @params['/template'] || 'message'
     end
 
+    alias template template_name
+
     def body
-      template = Template.new(template_name)
+      template = Template.new(self.template)
       template[:crawler] = self
       return template.to_s
     end
