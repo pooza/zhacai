@@ -1,4 +1,3 @@
-require 'addressable/uri'
 require 'time'
 require 'uri'
 
@@ -56,7 +55,7 @@ module Zhacai
     end
 
     def article_list_uri
-      uri = Addressable::URI.parse(@config['/growi/url'])
+      uri = Ginseng::URI.parse(@config['/growi/url'])
       uri.path = '/_api/pages.list'
       uri.query_values = {
         'access_token' => @config['/growi/token'],
@@ -66,11 +65,11 @@ module Zhacai
     end
 
     def hook_uri
-      return Addressable::URI.parse(@params['/hook'])
+      return Ginseng::URI.parse(@params['/hook'])
     end
 
     def create_entry_uri(path)
-      uri = Addressable::URI.parse(@config['/growi/url'])
+      uri = Ginseng::URI.parse(@config['/growi/url'])
       uri.path = path
       return uri
     end
@@ -84,12 +83,6 @@ module Zhacai
       Config.instance['/growi/entries'].each do |entry|
         yield Crawler.new(entry)
       end
-    end
-
-    private
-
-    def tz
-      return Time.now.strftime('%:z')
     end
   end
 end
