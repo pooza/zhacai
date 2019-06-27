@@ -43,7 +43,7 @@ module Zhacai
       @http.get(article_list_uri).parsed_response['pages'].each do |entry|
         next if ignore_paths.include?(entry['path'])
         break unless i < @config['/message/entries/limit']
-        time = Time.parse(entry['updatedAt']).getlocal(tz)
+        time = Time.parse(entry['updatedAt']).getlocal(Environment.tz)
         uri = create_entry_uri(entry['path'])
         entries[time.to_s] = {
           date: time,
