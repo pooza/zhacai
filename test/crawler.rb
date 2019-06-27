@@ -34,14 +34,14 @@ module Zhacai
 
     def test_hook_uri
       Crawler.all do |crawler|
-        assert(crawler.hook_uri.is_a?(Addressable::URI))
+        assert(crawler.hook_uri.is_a?(Ginseng::URI))
         assert(crawler.hook_uri.absolute?)
       end
     end
 
     def test_article_list_uri
       Crawler.all do |crawler|
-        assert(crawler.article_list_uri.is_a?(Addressable::URI))
+        assert(crawler.article_list_uri.is_a?(Ginseng::URI))
         assert(crawler.article_list_uri.absolute?)
         assert(crawler.article_list_uri.query_values['access_token'].present?)
         assert(crawler.article_list_uri.query_values['path'].present?)
