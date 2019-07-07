@@ -17,10 +17,10 @@ jobs:
           command: bundle exec rubocop
       - run:
           name: update gem
-          command: bundle exec rake bundler:update
+          command: bundle exec rake bundle:update
       - run:
           name: check gem
-          command: bundle exec rake bundler:check
+          command: bundle exec rake bundle:check
       - run:
           name: run test
           command: bundle exec rake test
