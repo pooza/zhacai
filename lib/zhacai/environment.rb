@@ -1,5 +1,3 @@
-require 'time'
-
 module Zhacai
   class Environment < Ginseng::Environment
     def self.name
@@ -8,10 +6,6 @@ module Zhacai
 
     def self.dir
       return File.expand_path('../..', __dir__)
-    end
-
-    def self.tz
-      return Time.now.strftime('%:z')
     end
   end
 end
