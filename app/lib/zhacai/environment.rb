@@ -5,7 +5,7 @@ module Zhacai
     end
 
     def self.dir
-      return File.expand_path('../..', __dir__)
+      return Zhacai.dir
     end
   end
 end
