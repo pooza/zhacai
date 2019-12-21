@@ -10,6 +10,6 @@ require 'zhacai'
   task action => "zhacai:#{action}"
 end
 
-Dir.glob(File.join(Zhacai::Environment.dir, 'app/task/*.rb')).each do |f|
+Dir.glob(File.join(Zhacai::Environment.dir, 'app/task/*.rb')).sort.each do |f|
   require f
 end
