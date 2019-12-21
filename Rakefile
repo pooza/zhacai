@@ -1,5 +1,5 @@
 dir = File.expand_path(__dir__)
-$LOAD_PATH.unshift(File.join(dir, 'lib'))
+$LOAD_PATH.unshift(File.join(dir, 'app/lib'))
 ENV['BUNDLE_GEMFILE'] ||= File.join(dir, 'Gemfile')
 
 require 'bundler/setup'
@@ -10,6 +10,6 @@ require 'zhacai'
   task action => "zhacai:#{action}"
 end
 
-Dir.glob(File.join(Zhacai::Environment.dir, 'lib/task/*.rb')).each do |f|
+Dir.glob(File.join(Zhacai::Environment.dir, 'app/task/*.rb')).sort.each do |f|
   require f
 end
