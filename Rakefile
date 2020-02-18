@@ -5,11 +5,6 @@ ENV['BUNDLE_GEMFILE'] ||= File.join(dir, 'Gemfile')
 require 'bundler/setup'
 require 'zhacai'
 
-[:crawl].each do |action|
-  desc "alias of zhacai:#{action}"
-  task action => "zhacai:#{action}"
-end
-
 Dir.glob(File.join(Zhacai::Environment.dir, 'app/task/*.rb')).sort.each do |f|
   require f
 end
