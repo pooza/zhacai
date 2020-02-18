@@ -38,8 +38,7 @@ module Zhacai
 
     def entries
       entries = {}
-      i = 0
-      @http.get(article_list_uri).parsed_response['pages'].each do |entry|
+      @http.get(article_list_uri).parsed_response['pages'].each_with_index do |entry, i|
         next if ignore_paths.include?(entry['path'])
         break unless i < @config['/message/entries/limit']
         time = Time.parse(entry['updatedAt']).getlocal(Environment.tz)
@@ -49,7 +48,6 @@ module Zhacai
           title: URI.decode_www_form_component(uri.path.split('/').last),
           uri: uri,
         }
-        i += 1
       end
       return entries.sort.reverse
     end
