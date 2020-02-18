@@ -9,4 +9,3 @@ end
   desc "alias of zhacai:#{action}"
   task action => "zhacai:#{action}"
 end
-
