@@ -1,8 +1,6 @@
 require 'active_support'
 require 'active_support/core_ext'
-require 'zeitwerk'
 require 'ginseng'
-require 'yaml'
 
 module Zhacai
   def self.dir
@@ -17,8 +15,8 @@ module Zhacai
     config['dirs'].each do |d|
       loader.push_dir(File.join(dir, 'app', d))
     end
-    loader.setup
+    return loader
   end
 end
 
-Zhacai.loader
+Zhacai.loader.setup
