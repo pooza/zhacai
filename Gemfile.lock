@@ -1,8 +1,8 @@
 GIT
   remote: https://github.com/pooza/ginseng-core.git
-  revision: 1529a5f322e342fad2d34a24de8e152421d0a3c4
+  revision: 22bb0407269e10ee90ce6cd2946c8c6286c096a5
   specs:
-    ginseng-core (1.6.1)
+    ginseng-core (1.6.2)
       activesupport
       addressable
       bundler
@@ -63,11 +63,13 @@ GEM
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
-    rubocop (0.79.0)
+    rexml (3.2.4)
+    rubocop (0.80.0)
       jaro_winkler (~> 1.5.1)
       parallel (~> 1.10)
       parser (>= 2.7.0.1)
       rainbow (>= 2.2.2, < 4.0)
+      rexml
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 1.4.0, < 1.7)
     rubocop-performance (1.5.2)
