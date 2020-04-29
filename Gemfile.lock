@@ -1,28 +1,24 @@
 GIT
   remote: https://github.com/pooza/ginseng-core.git
-  revision: 1529a5f322e342fad2d34a24de8e152421d0a3c4
+  revision: a98fa94f7bb6c3d2f244eec3024d45a39b1b6861
   specs:
-    ginseng-core (1.6.1)
+    ginseng-core (1.7.1)
       activesupport
       addressable
-      bundler
-      csv
+      bundler (>= 2.0.0)
       daemon-spawn
       httparty
       rake
       rest-client
-      rubocop
-      rubocop-performance
       syslog-logger
-      test-unit
       unicode
       yajl-ruby
-      zeitwerk
+      zeitwerk (>= 2.3.0)
 
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (6.0.2.1)
+    activesupport (6.0.2.2)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (>= 0.7, < 2)
       minitest (~> 5.1)
@@ -32,14 +28,13 @@ GEM
       public_suffix (>= 2.0.2, < 5.0)
     ast (2.4.0)
     concurrent-ruby (1.1.6)
-    csv (3.1.2)
     daemon-spawn (0.4.2)
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
     http-accept (1.7.0)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
-    httparty (0.17.3)
+    httparty (0.18.0)
       mime-types (~> 3.0)
       multi_xml (>= 0.5.2)
     i18n (1.8.2)
@@ -47,15 +42,15 @@ GEM
     jaro_winkler (1.5.4)
     mime-types (3.3.1)
       mime-types-data (~> 3.2015)
-    mime-types-data (3.2019.1009)
+    mime-types-data (3.2020.0425)
     minitest (5.14.0)
     multi_xml (0.6.0)
     netrc (0.11.0)
     parallel (1.19.1)
-    parser (2.7.0.2)
+    parser (2.7.1.1)
       ast (~> 2.4.0)
-    power_assert (1.1.5)
-    public_suffix (4.0.3)
+    power_assert (1.2.0)
+    public_suffix (4.0.4)
     rainbow (3.0.0)
     rake (13.0.1)
     rest-client (2.1.0)
@@ -63,13 +58,15 @@ GEM
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
-    rubocop (0.79.0)
+    rexml (3.2.4)
+    rubocop (0.82.0)
       jaro_winkler (~> 1.5.1)
       parallel (~> 1.10)
       parser (>= 2.7.0.1)
       rainbow (>= 2.2.2, < 4.0)
+      rexml
       ruby-progressbar (~> 1.7)
-      unicode-display_width (>= 1.4.0, < 1.7)
+      unicode-display_width (>= 1.4.0, < 2.0)
     rubocop-performance (1.5.2)
       rubocop (>= 0.71.0)
     ruby-progressbar (1.10.1)
@@ -77,24 +74,27 @@ GEM
     test-unit (3.3.5)
       power_assert
     thread_safe (0.3.6)
-    tzinfo (1.2.6)
+    tzinfo (1.2.7)
       thread_safe (~> 0.1)
     unf (0.1.4)
       unf_ext
-    unf_ext (0.0.7.6)
+    unf_ext (0.0.7.7)
     unicode (0.4.4.4)
-    unicode-display_width (1.6.1)
+    unicode-display_width (1.7.0)
     yajl-ruby (1.4.1)
-    zeitwerk (2.2.2)
+    zeitwerk (2.3.0)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   ginseng-core!
+  rubocop
+  rubocop-performance
+  test-unit
 
 RUBY VERSION
-   ruby 2.7.0p0
+   ruby 2.7.1p83
 
 BUNDLED WITH
-   2.1.2
+   2.1.4

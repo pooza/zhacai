@@ -5,7 +5,7 @@ module Zhacai
   class Crawler
     def initialize(params)
       @config = Config.instance
-      @params = Config.flatten('', params)
+      @params = params.key_flatten
       @logger = Logger.new
       @http = HTTP.new
     end
