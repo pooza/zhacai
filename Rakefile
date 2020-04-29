@@ -5,6 +5,4 @@ ENV['BUNDLE_GEMFILE'] ||= File.join(dir, 'Gemfile')
 require 'bundler/setup'
 require 'zhacai'
 
-Dir.glob(File.join(Zhacai::Environment.dir, 'app/task/*.rb')).sort.each do |f|
-  require f
-end
+Zhacai.load_tasks
