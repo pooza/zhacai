@@ -10,8 +10,9 @@ module Zhacai
       @http = HTTP.new
     end
 
-    def crawl
-      Slack.new(hook_uri).say(body, :text)
+    def crawl(params = {})
+      puts body if params[:print]
+      Slack.new(hook_uri).say(body, :text) if params[:post]
       @logger.info(@params)
     rescue => e
       e = Ginseng::Error.create(e)
@@ -72,8 +73,9 @@ module Zhacai
       return uri
     end
 
-    def self.crawl_all
-      all(&:crawl)
+    def self.crawl_all(params = {})
+      params[:post] = true unless params.present?
+      all.map {|entry| entry.crawl(params)}
     end
 
     def self.all
