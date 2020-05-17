@@ -2,21 +2,23 @@ module Zhacai
   class CrawlerTest < Test::Unit::TestCase
     def setup
       @config = Config.instance
-      return unless Environment.ci?
-      @config['/growi/entries'] = []
-      @config['/growi/uri'] = 'https://growi.b-shock.org'
+      @config['/growi/url'] = 'https://growi.b-shock.org'
+      @config['/entries'] = [
+        'key' => 'news',
+        'path' => '/user/pooza/curesta',
+        'ignore_paths' => ['/user/pooza/curesta'],
+      ]
     end
 
     def test_all
-      assert(Crawler.all.present?)
       Crawler.all do |crawler|
         assert(crawler.is_a?(Crawler))
       end
     end
 
-    def test_template_name
+    def test_template
       Crawler.all do |crawler|
-        assert(crawler.template_name.present?)
+        assert(crawler.template.present?)
       end
     end
 
@@ -27,37 +29,31 @@ module Zhacai
     end
 
     def test_body
+      return if Environment.ci?
       Crawler.all do |crawler|
         assert(crawler.body.present?)
       end
     end
 
-    def test_hook_uri
+    def test_uri
+      return if Environment.ci?
       Crawler.all do |crawler|
-        assert(crawler.hook_uri.is_a?(Ginseng::URI))
-        assert(crawler.hook_uri.absolute?)
+        assert(crawler.uri.is_a?(Ginseng::URI))
+        assert(crawler.uri.absolute?)
       end
-    end
-
-    def test_article_list_uri
-      Crawler.all do |crawler|
-        assert(crawler.article_list_uri.is_a?(Ginseng::URI))
-        assert(crawler.article_list_uri.absolute?)
-        assert(crawler.article_list_uri.query_values['access_token'].present?)
-        assert(crawler.article_list_uri.query_values['path'].present?)
-      end
-    end
-
-    def test_create_entry_uri
-      return unless crawler = Crawler.all.to_a.first
-      assert(crawler.create_entry_uri('/news').absolute?)
     end
 
     def test_entries
+      return if Environment.ci?
       Crawler.all do |crawler|
         assert(crawler.entries.is_a?(Array))
         assert(crawler.entries.present?)
       end
+    end
+
+    def test_exec
+      return if Environment.ci?
+      Crawler.all(&:exec)
     end
   end
 end

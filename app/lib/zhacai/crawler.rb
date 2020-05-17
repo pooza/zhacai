@@ -3,33 +3,9 @@ require 'uri'
 
 module Zhacai
   class Crawler
-    def initialize(params)
-      @config = Config.instance
-      @params = params.key_flatten
-      @logger = Logger.new
-      @http = HTTP.new
+    def exec
+      puts body
     end
-
-    def crawl(params = {})
-      puts body if params[:print]
-      Slack.new(hook_uri).say(body, :text) if params[:post]
-      @logger.info(@params)
-    rescue => e
-      e = Ginseng::Error.create(e)
-      e.package = Package.full_name
-      Slack.broadcast(e.to_h)
-      @logger.error(e.to_h)
-    end
-
-    def ignore_paths
-      return @params['/ignore_paths'] || []
-    end
-
-    def template_name
-      return @params['/template'] || 'message'
-    end
-
-    alias template template_name
 
     def body
       template = Template.new(self.template)
@@ -37,52 +13,64 @@ module Zhacai
       return template.to_s
     end
 
+    def key
+      return @params['/key']
+    end
+
+    def template
+      return @params['/template'] || 'message'
+    end
+
+    def ignore_paths
+      return @params['/ignore_paths'] || []
+    end
+
     def entries
-      entries = {}
-      @http.get(article_list_uri).parsed_response['pages'].each_with_index do |entry, i|
+      entries = []
+      @http.get(uri).parsed_response['pages'].each_with_index do |entry, i|
         next if ignore_paths.include?(entry['path'])
         break unless i < @config['/message/entries/limit']
-        time = Time.parse(entry['updatedAt']).getlocal(Environment.tz)
-        uri = create_entry_uri(entry['path'])
-        entries[time.to_s] = {
-          date: time,
-          title: URI.decode_www_form_component(uri.path.split('/').last),
-          uri: uri,
+        entries.push(
+          date: Time.parse(entry['updatedAt']).getlocal,
+          title: URI.decode_www_form_component(entry['path'].split('/').last),
+          uri: @http.create_uri(entry['path']),
+        )
+      end
+      return entries.sort_by {|v| v[:date]}.reverse
+    end
+
+    def uri
+      unless @uri
+        @uri = @http.create_uri('/_api/pages.list')
+        @uri.query_values = {
+          'access_token' => @config['/growi/token'],
+          'path' => @params['/path'],
         }
       end
-      return entries.sort.reverse
+      return @uri
     end
 
-    def article_list_uri
-      uri = Ginseng::URI.parse(@config['/growi/url'])
-      uri.path = '/_api/pages.list'
-      uri.query_values = {
-        'access_token' => @config['/growi/token'],
-        'path' => @params['/path'],
-      }
-      return uri
-    end
-
-    def hook_uri
-      return Ginseng::URI.parse(@params['/hook'])
-    end
-
-    def create_entry_uri(path)
-      uri = Ginseng::URI.parse(@config['/growi/url'])
-      uri.path = path
-      return uri
-    end
-
-    def self.crawl_all(params = {})
-      params[:post] = true unless params.present?
-      all.map {|entry| entry.crawl(params)}
+    def self.create(key)
+      all do |crawler|
+        return crawler if key == crawler.key
+      end
+      return nil
     end
 
     def self.all
       return enum_for(__method__) unless block_given?
-      Config.instance['/growi/entries'].each do |entry|
+      Config.instance['/entries'].each do |entry|
         yield Crawler.new(entry)
       end
+    end
+
+    private
+
+    def initialize(params)
+      @config = Config.instance
+      @params = params.key_flatten
+      @http = HTTP.new
+      @http.base_uri = @config['/growi/url']
     end
   end
 end
