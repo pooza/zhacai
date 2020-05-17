@@ -23,11 +23,9 @@ module Zhacai
       return @params['/template'] || 'message'
     end
 
-
     def ignore_paths
       return @params['/ignore_paths'] || []
     end
-
 
     def entries
       entries = {}
@@ -53,10 +51,6 @@ module Zhacai
         'path' => @params['/path'],
       }
       return uri
-    end
-
-    def hook_uri
-      return Ginseng::URI.parse(@params['/hook'])
     end
 
     def create_entry_uri(path)
