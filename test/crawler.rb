@@ -2,7 +2,7 @@ module Zhacai
   class CrawlerTest < Test::Unit::TestCase
     def setup
       @config = Config.instance
-      @config['/growi/uri'] = 'https://growi.b-shock.org'
+      @config['/growi/url'] = 'https://growi.b-shock.org'
       @config['/entries'] = [
         'key' => 'news',
         'path' => '/user/pooza/curesta',
