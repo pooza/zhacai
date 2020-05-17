@@ -47,9 +47,7 @@ module Zhacai
     end
 
     def test_exec
-      Crawler.all do |crawler|
-        crawler.exec
-      end
+      Crawler.all(&:exec)
     end
   end
 end
