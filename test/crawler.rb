@@ -29,12 +29,14 @@ module Zhacai
     end
 
     def test_body
+      return if Environment.ci?
       Crawler.all do |crawler|
         assert(crawler.body.present?)
       end
     end
 
     def test_uri
+      return if Environment.ci?
       Crawler.all do |crawler|
         assert(crawler.uri.is_a?(Ginseng::URI))
         assert(crawler.uri.absolute?)
