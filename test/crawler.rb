@@ -14,9 +14,9 @@ module Zhacai
       end
     end
 
-    def test_template_name
+    def test_template
       Crawler.all do |crawler|
-        assert(crawler.template_name.present?)
+        assert(crawler.template.present?)
       end
     end
 
@@ -32,31 +32,23 @@ module Zhacai
       end
     end
 
-    def test_hook_uri
+    def test_uri
       Crawler.all do |crawler|
-        assert(crawler.hook_uri.is_a?(Ginseng::URI))
-        assert(crawler.hook_uri.absolute?)
+        assert(crawler.uri.is_a?(Ginseng::URI))
+        assert(crawler.uri.absolute?)
       end
-    end
-
-    def test_article_list_uri
-      Crawler.all do |crawler|
-        assert(crawler.article_list_uri.is_a?(Ginseng::URI))
-        assert(crawler.article_list_uri.absolute?)
-        assert(crawler.article_list_uri.query_values['access_token'].present?)
-        assert(crawler.article_list_uri.query_values['path'].present?)
-      end
-    end
-
-    def test_create_entry_uri
-      return unless crawler = Crawler.all.to_a.first
-      assert(crawler.create_entry_uri('/news').absolute?)
     end
 
     def test_entries
       Crawler.all do |crawler|
         assert(crawler.entries.is_a?(Array))
         assert(crawler.entries.present?)
+      end
+    end
+
+    def test_exec
+      Crawler.all do |crawler|
+        crawler.exec
       end
     end
   end
