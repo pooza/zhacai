@@ -9,30 +9,25 @@ module Zhacai
       @http = HTTP.new
     end
 
-    def crawl(params = {})
-      puts body if params[:print]
-      Slack.new(hook_uri).say(body, :text) if params[:post]
-    rescue => e
-      e = Ginseng::Error.create(e)
-      e.package = Package.full_name
-      Slack.broadcast(e.to_h)
+    def exec
+      puts body
     end
+
+    def body
+      template = Template.new(template)
+      template[:crawler] = self
+      return template.to_s
+    end
+
+    def template
+      return @params['/template'] || 'message'
+    end
+
 
     def ignore_paths
       return @params['/ignore_paths'] || []
     end
 
-    def template_name
-      return @params['/template'] || 'message'
-    end
-
-    alias template template_name
-
-    def body
-      template = Template.new(self.template)
-      template[:crawler] = self
-      return template.to_s
-    end
 
     def entries
       entries = {}
