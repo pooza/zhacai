@@ -2,7 +2,6 @@ module Zhacai
   class CrawlerTest < Test::Unit::TestCase
     def setup
       @config = Config.instance
-      return unless Environment.ci?
       @config['/growi/uri'] = 'https://growi.b-shock.org'
       @config['/entries'] = [
         'key' => 'news',
