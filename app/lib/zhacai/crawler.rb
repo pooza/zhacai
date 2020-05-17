@@ -6,19 +6,16 @@ module Zhacai
     def initialize(params)
       @config = Config.instance
       @params = params.key_flatten
-      @logger = Logger.new
       @http = HTTP.new
     end
 
     def crawl(params = {})
       puts body if params[:print]
       Slack.new(hook_uri).say(body, :text) if params[:post]
-      @logger.info(@params)
     rescue => e
       e = Ginseng::Error.create(e)
       e.package = Package.full_name
       Slack.broadcast(e.to_h)
-      @logger.error(e.to_h)
     end
 
     def ignore_paths
