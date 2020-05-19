@@ -1,5 +1,4 @@
 require 'time'
-require 'uri'
 
 module Zhacai
   class Crawler
@@ -32,7 +31,7 @@ module Zhacai
         break unless i < @config['/message/entries/limit']
         entries.push(
           date: Time.parse(entry['updatedAt']).getlocal,
-          title: URI.decode_www_form_component(entry['path'].split('/').last),
+          title: Ginseng::URI.decode(entry['path'].split('/').last),
           uri: @http.create_uri(entry['path']),
         )
       end
