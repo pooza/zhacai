@@ -10,7 +10,7 @@ module Zhacai
     loader = Zeitwerk::Loader.new
     loader.inflector.inflect(config['inflections'])
     loader.push_dir(File.join(dir, 'app/lib'))
-    loader.collapse('app/lib/shooby_do_bop/*')
+    loader.collapse('app/lib/zhacai/*')
     return loader
   end
 
