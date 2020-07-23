@@ -3,11 +3,11 @@ module Zhacai
     def setup
       @config = Config.instance
       @config['/growi/url'] = 'https://growi.b-shock.org'
-      @config['/entries'] = [
+      @config['/entries'] = [{
         'key' => 'news',
         'path' => '/user/pooza/curesta',
         'ignore_paths' => ['/user/pooza/curesta'],
-      ]
+      }]
     end
 
     def test_all
